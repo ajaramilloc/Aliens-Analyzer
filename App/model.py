@@ -119,6 +119,16 @@ def requirement7(analyzer, state):
     ovnis_state = getOvnisMap(analyzer['ovnis_state'], state)
     return ovnis_state
 
+def requirement8(analyzer, country):
+    ovnis_country = getOvnisMap(analyzer['ovnis_country'], country)
+    ovnis_country_duration = om.newMap(omaptype='RBT', comparefunction = cmpTreeElements)
+    for ovni in lt.iterator(ovnis_country):
+        addOvniTree(ovnis_country_duration, ovni, 'duration (seconds)')
+    max_duration_country = om.maxKey(ovnis_country_duration)
+    min_duration_country = om.minKey(ovnis_country_duration)
+    dic = {'max_duration': max_duration_country, 'min_duration': min_duration_country}
+    return dic
+
 # -----------------------------------------------------
 # GET DATA FUNCTIONS
 # -----------------------------------------------------

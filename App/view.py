@@ -63,3 +63,8 @@ while True:
         state = input('Enter state: ')
         ovnis_state = controller.requirement7(control, state)
         print(ovnis_state)
+
+    elif inputs == 8:
+        country = input('Enter country: ')
+        dic = controller.requirement8(control, country)
+        print(dic)

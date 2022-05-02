@@ -43,3 +43,6 @@ def requirement5(analyzer, initial_date, final_date):
 
 def requirement7(analyzer, state):
     return model.requirement7(analyzer, state)
+
+def requirement8(analyzer, country):
+    return model.requirement8(analyzer, country)
