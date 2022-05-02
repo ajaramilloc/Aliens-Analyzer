@@ -58,3 +58,8 @@ while True:
         final_date = input('Enter fianl date: ')
         ovnis_period_time = controller.requirement5(control, initial_date, final_date)
         print(ovnis_period_time)
+
+    elif inputs == 7:
+        state = input('Enter state: ')
+        ovnis_state = controller.requirement7(control, state)
+        print(ovnis_state)

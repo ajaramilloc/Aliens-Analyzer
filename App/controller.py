@@ -40,3 +40,6 @@ def requirement4(analyzer, duration):
 
 def requirement5(analyzer, initial_date, final_date):
     return model.requirement5(analyzer, initial_date, final_date)
+
+def requirement7(analyzer, state):
+    return model.requirement7(analyzer, state)

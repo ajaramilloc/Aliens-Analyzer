@@ -10,13 +10,15 @@ def newAnalyzer():
         'ovnis_country': None,
         'ovnis_date': None,
         'ovnis_city': None,
-        'ovnis_duration': None
+        'ovnis_duration': None,
+        'ovnis_state': None
     }
 
     analyzer['ovnis_country'] = mp.newMap(101, maptype='PROBING', loadfactor=0.5)
     analyzer['ovnis_date'] = om.newMap(omaptype='RBT', comparefunction = cmpDates)
     analyzer['ovnis_city'] = mp.newMap(101, maptype='PROBING', loadfactor=0.5)
     analyzer['ovnis_duration'] = om.newMap(omaptype='RBT', comparefunction = cmpTreeElements)
+    analyzer['ovnis_state'] = mp.newMap(101, maptype='PROBING', loadfactor=0.5)
 
     return analyzer
 
@@ -27,6 +29,7 @@ def addOvni(analyzer, ovni):
     addOvniTree(analyzer['ovnis_date'], ovni, 'datetime')
     addOvniMap(analyzer['ovnis_city'], ovni, 'city')
     addOvniTree(analyzer['ovnis_duration'], ovni, 'duration (seconds)')
+    addOvniMap(analyzer['ovnis_state'], ovni, 'state')
 
 # -----------------------------------------------------
 # CMP FUNCTIONS    
@@ -111,6 +114,10 @@ def requirement4(analyzer, duration):
 def requirement5(analyzer, initial_date, final_date):
     ovnis_period_time = getIntervalOvnis(analyzer['ovnis_date'], initial_date, final_date)
     return ovnis_period_time
+
+def requirement7(analyzer, state):
+    ovnis_state = getOvnisMap(analyzer['ovnis_state'], state)
+    return ovnis_state
 
 # -----------------------------------------------------
 # GET DATA FUNCTIONS
