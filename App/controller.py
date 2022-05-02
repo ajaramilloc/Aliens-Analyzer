@@ -49,3 +49,6 @@ def requirement8(analyzer, country):
 
 def requirement9(analyzer):
     return model.requirement9(analyzer)
+
+def requirement11(analyzer, word):
+    return model.requirement11(analyzer, word)

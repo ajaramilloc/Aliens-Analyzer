@@ -2,7 +2,7 @@ from DISClib.ADT import list as lt
 from DISClib.ADT import orderedmap as om
 from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
-from DISClib.Algorithms.Sorting import mergesort as merge
+from math import radians, cos, sin, asin, sqrt
 import time
 
 def newAnalyzer():
@@ -12,7 +12,8 @@ def newAnalyzer():
         'ovnis_city': None,
         'ovnis_duration': None,
         'ovnis_state': None,
-        'ovnis_shape': None
+        'ovnis_shape': None,
+        'ovnis_comments': None
     }
 
     analyzer['ovnis_country'] = mp.newMap(101, maptype='PROBING', loadfactor=0.5)
@@ -21,18 +22,23 @@ def newAnalyzer():
     analyzer['ovnis_duration'] = om.newMap(omaptype='RBT', comparefunction = cmpTreeElements)
     analyzer['ovnis_state'] = mp.newMap(101, maptype='PROBING', loadfactor=0.5)
     analyzer['ovnis_shape'] = mp.newMap(101, maptype='PROBING', loadfactor=0.5)
+    analyzer['ovnis_comments'] = mp.newMap(20, maptype='PROBING', loadfactor=0.5)
 
     return analyzer
 
 def addOvni(analyzer, ovni):
     ovni['duration (seconds)'] = float(ovni['duration (seconds)'])
     ovni['datetime'] = ovni['datetime'].split(' ', 1)[0]
+    ovni['comments'] = ovni['comments'].split(' ')
+    for i in range(0, len(ovni['comments'])):
+        ovni['comments'][i] = ovni['comments'][i].strip()
     addOvniMap(analyzer['ovnis_country'], ovni, 'country')
     addOvniTree(analyzer['ovnis_date'], ovni, 'datetime')
     addOvniMap(analyzer['ovnis_city'], ovni, 'city')
     addOvniTree(analyzer['ovnis_duration'], ovni, 'duration (seconds)')
     addOvniMap(analyzer['ovnis_state'], ovni, 'state')
     addOvniMap(analyzer['ovnis_shape'], ovni, 'shape')
+    addOvniListMap(analyzer['ovnis_comments'], ovni, 'comments')
 
 # -----------------------------------------------------
 # CMP FUNCTIONS    
@@ -71,6 +77,18 @@ def addOvniMap(map, ovni, property_name):
         property_ovnis = newProperty(property)
         mp.put(map, property, property_ovnis)
     lt.addLast(property_ovnis['ovnis'], ovni)
+
+def addOvniListMap(map, ovni, property_name):
+    property = ovni[f'{property_name}']
+    for property_index in property:
+        exist_property = mp.contains(map, property_index)
+        if exist_property:
+            entry = mp.get(map, property_index)
+            property_ovnis = me.getValue(entry)
+        else:
+            property_ovnis = newProperty(property_index)
+            mp.put(map, property_index, property_ovnis)
+        lt.addLast(property_ovnis['ovnis'], ovni)
 
 # -----------------------------------------------------
 # ADD DATA FUNCTION (TREES)
@@ -138,6 +156,10 @@ def requirement9(analyzer):
     for i in lt.iterator(ovnis_shape):
         lt.addLast(shapes, {lt.firstElement(i['ovnis'])['shape']: lt.size(i['ovnis'])})
     return shapes
+
+def requirement11(analyzer, word):
+    ovnis_word = getOvnisMap(analyzer['ovnis_comments'], word)
+    return ovnis_word
 
 # -----------------------------------------------------
 # GET DATA FUNCTIONS

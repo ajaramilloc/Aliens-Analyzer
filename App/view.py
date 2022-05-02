@@ -73,3 +73,11 @@ while True:
         input('Press enter to start')
         shapes = controller.requirement9(control)
         print(shapes)
+
+    elif inputs == 10:
+        pass
+
+    elif inputs == 11:
+        word  = input('Enter the word: ')
+        ovnis_word = controller.requirement11(control, word)
+        print(ovnis_word)
