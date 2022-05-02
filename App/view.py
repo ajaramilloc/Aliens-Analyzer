@@ -38,12 +38,23 @@ while True:
         players = loadData()
         print("Data was charged succesfully")
 
-    if inputs == 2:
+    elif inputs == 2:
         date = input('Enter date: ')
         ovnis_date = controller.requirement2(control, date)
         print(ovnis_date)
 
-    if inputs == 3:
+    elif inputs == 3:
         city = input('Enter the city: ')
         ovnis_city = controller.requirement3(control, city)
         print(ovnis_city)
+
+    elif inputs == 4:
+        duration = float(input('Enter duration: '))
+        ovnis_duration = controller.requirement4(control, duration)
+        print(ovnis_duration)
+
+    elif inputs == 5:
+        initial_date = input('Enter init date: ')
+        final_date = input('Enter fianl date: ')
+        ovnis_period_time = controller.requirement5(control, initial_date, final_date)
+        print(ovnis_period_time)

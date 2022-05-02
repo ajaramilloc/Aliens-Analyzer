@@ -34,3 +34,9 @@ def requirement2(analyzer, date):
 
 def requirement3(analyzer, city):
     return model.requirement3(analyzer, city)
+
+def requirement4(analyzer, duration):
+    return model.requirement4(analyzer, duration)
+
+def requirement5(analyzer, initial_date, final_date):
+    return model.requirement5(analyzer, initial_date, final_date)
