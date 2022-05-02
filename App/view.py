@@ -68,3 +68,8 @@ while True:
         country = input('Enter country: ')
         dic = controller.requirement8(control, country)
         print(dic)
+
+    elif inputs == 9:
+        input('Press enter to start')
+        shapes = controller.requirement9(control)
+        print(shapes)

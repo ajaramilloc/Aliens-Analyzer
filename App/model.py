@@ -11,7 +11,8 @@ def newAnalyzer():
         'ovnis_date': None,
         'ovnis_city': None,
         'ovnis_duration': None,
-        'ovnis_state': None
+        'ovnis_state': None,
+        'ovnis_shape': None
     }
 
     analyzer['ovnis_country'] = mp.newMap(101, maptype='PROBING', loadfactor=0.5)
@@ -19,6 +20,7 @@ def newAnalyzer():
     analyzer['ovnis_city'] = mp.newMap(101, maptype='PROBING', loadfactor=0.5)
     analyzer['ovnis_duration'] = om.newMap(omaptype='RBT', comparefunction = cmpTreeElements)
     analyzer['ovnis_state'] = mp.newMap(101, maptype='PROBING', loadfactor=0.5)
+    analyzer['ovnis_shape'] = mp.newMap(101, maptype='PROBING', loadfactor=0.5)
 
     return analyzer
 
@@ -30,6 +32,7 @@ def addOvni(analyzer, ovni):
     addOvniMap(analyzer['ovnis_city'], ovni, 'city')
     addOvniTree(analyzer['ovnis_duration'], ovni, 'duration (seconds)')
     addOvniMap(analyzer['ovnis_state'], ovni, 'state')
+    addOvniMap(analyzer['ovnis_shape'], ovni, 'shape')
 
 # -----------------------------------------------------
 # CMP FUNCTIONS    
@@ -128,6 +131,13 @@ def requirement8(analyzer, country):
     min_duration_country = om.minKey(ovnis_country_duration)
     dic = {'max_duration': max_duration_country, 'min_duration': min_duration_country}
     return dic
+
+def requirement9(analyzer):
+    ovnis_shape = mp.valueSet(analyzer['ovnis_shape'])
+    shapes = lt.newList('ARRAY_LIST')
+    for i in lt.iterator(ovnis_shape):
+        lt.addLast(shapes, {lt.firstElement(i['ovnis'])['shape']: lt.size(i['ovnis'])})
+    return shapes
 
 # -----------------------------------------------------
 # GET DATA FUNCTIONS
